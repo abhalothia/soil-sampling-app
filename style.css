@@ -1,14 +1,15 @@
 /* Fortune Farms Soil Sampling App */
 
 :root {
-    /* Colors - Agricultural Theme (matching po_app) */
-    --primary: #15803d;
-    --primary-dark: #166534;
-    --primary-light: #dcfce7;
-    --primary-50: #f0fdf4;
+    /* Colors - Kiwi Palette */
+    --primary: #028174;
+    --primary-dark: #026b60;
+    --primary-medium: #0AB68B;
+    --primary-light: #92DE8B;
+    --primary-50: #e8f5f3;
 
-    --accent: #f59e0b;
-    --accent-light: #fef3c7;
+    --accent: #FFE3B3;
+    --accent-dark: #f5d08a;
 
     --danger: #dc2626;
     --danger-light: #fee2e2;
@@ -211,7 +212,7 @@ body {
 .proximity-warning {
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--accent);
+    color: #d97706;
     display: block;
     margin-top: 4px;
 }
@@ -244,9 +245,9 @@ body {
 .sample-instructions {
     margin-top: 12px;
     padding: 14px;
-    background: var(--accent-light);
+    background: var(--accent);
     border-radius: var(--radius);
-    border-left: 3px solid var(--accent);
+    border-left: 3px solid var(--accent-dark);
 }
 
 .sample-instructions.hidden {
@@ -356,7 +357,7 @@ body {
 }
 
 .progress-dot.current {
-    background: var(--accent);
+    background: #f59e0b;
     color: white;
 }
 
@@ -604,7 +605,7 @@ body {
 }
 
 .btn-warning {
-    background: var(--accent);
+    background: #f59e0b;
     color: white;
 }
 
@@ -723,7 +724,7 @@ textarea {
 textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
+    box-shadow: 0 0 0 3px rgba(2, 129, 116, 0.15);
 }
 
 .form-actions {
@@ -755,7 +756,7 @@ textarea:focus {
 
 /* Map Markers */
 .sample-marker {
-    background: var(--accent);
+    background: #f59e0b;
     color: white;
     border-radius: 50%;
     width: 28px;

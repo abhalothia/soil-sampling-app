@@ -559,7 +559,7 @@ function updateObservationsList() {
     `).join('');
 }
 
-function exportCSV() {
+async function exportCSV() {
     if (observations.length === 0) {
         showToast('No data to export');
         return;
@@ -585,13 +585,33 @@ function exportCSV() {
     ]);
 
     const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-
-    // Download file
+    const fileName = `soil_samples_${new Date().toISOString().split('T')[0]}.csv`;
     const blob = new Blob([csv], { type: 'text/csv' });
+    const file = new File([blob], fileName, { type: 'text/csv' });
+
+    // Try Web Share API first (for mobile)
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({
+                files: [file],
+                title: 'Soil Sampling Data',
+                text: 'Exported soil sampling observations'
+            });
+            showToast('Shared successfully');
+            return;
+        } catch (err) {
+            // User cancelled or share failed, fall back to download
+            if (err.name !== 'AbortError') {
+                console.log('Share failed, falling back to download:', err);
+            }
+        }
+    }
+
+    // Fallback: Download file directly
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `soil_samples_${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
