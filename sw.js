@@ -1,6 +1,6 @@
 // Service Worker for Fortune Farms Soil Sampling App
 // Change this version to force cache refresh
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.0.1';
 const CACHE_NAME = `soil-sampling-${CACHE_VERSION}`;
 
 // Files to cache
