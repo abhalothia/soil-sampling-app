@@ -23,6 +23,46 @@ let userMarker = null; // Marker showing user location
 const PROXIMITY_THRESHOLD = 30; // meters - warn if user is farther than this
 
 // ==========================================
+// Service Worker Registration
+// ==========================================
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+            console.log('SW registered:', registration.scope);
+
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        // New version available
+                        showUpdateNotification();
+                    }
+                });
+            });
+        })
+        .catch(err => console.log('SW registration failed:', err));
+
+    // Reload when new SW takes over
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+        }
+    });
+}
+
+function showUpdateNotification() {
+    const update = confirm('A new version is available. Reload to update?');
+    if (update) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.waiting.postMessage('skipWaiting');
+        });
+    }
+}
+
+// ==========================================
 // Initialize App
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
