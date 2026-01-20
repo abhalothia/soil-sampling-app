@@ -1,23 +1,24 @@
 /* Fortune Farms Soil Sampling App - Bold Modern UI */
 
 :root {
-    --primary-color: #1a1a1a;
-    --primary-dark: #000000;
-    --accent-color: #22c55e;
-    --accent-dark: #16a34a;
-    --secondary-color: #3b82f6;
-    --danger-color: #ef4444;
+    --primary-color: #16a34a;
+    --primary-dark: #15803d;
+    --primary-light: #22c55e;
+    --accent-color: #16a34a;
+    --accent-dark: #15803d;
+    --secondary-color: #16a34a;
+    --danger-color: #dc2626;
     --warning-color: #f59e0b;
-    --text-primary: #0a0a0a;
-    --text-secondary: #525252;
-    --text-muted: #a3a3a3;
+    --text-primary: #14532d;
+    --text-secondary: #166534;
+    --text-muted: #6b7280;
     --bg-primary: #ffffff;
-    --bg-secondary: #fafafa;
-    --bg-tertiary: #f5f5f5;
-    --border-color: #e5e5e5;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --bg-secondary: #f0fdf4;
+    --bg-tertiary: #dcfce7;
+    --border-color: #bbf7d0;
+    --shadow-sm: 0 1px 2px rgba(22,163,74,0.08);
+    --shadow-md: 0 4px 6px rgba(22,163,74,0.1);
+    --shadow-lg: 0 10px 25px rgba(22,163,74,0.15);
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -575,7 +576,7 @@ body {
 
 .offline-badge {
     display: inline-block;
-    background: var(--text-primary);
+    background: var(--primary-color);
     color: white;
     padding: 4px 10px;
     border-radius: var(--radius-sm);
@@ -609,12 +610,12 @@ body {
 }
 
 .btn-primary {
-    background: var(--secondary-color);
+    background: var(--primary-color);
     color: white;
 }
 
 .btn-primary:active {
-    background: #2563eb;
+    background: var(--primary-dark);
 }
 
 .btn-success {
@@ -756,9 +757,9 @@ body {
 }
 
 .radio-label:has(input:checked) {
-    background: var(--primary-color);
+    background: var(--primary-dark);
     color: white;
-    border-color: var(--primary-color);
+    border-color: var(--primary-dark);
 }
 
 .radio-label input {
@@ -823,7 +824,7 @@ textarea:focus {
     bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--text-primary);
+    background: var(--primary-dark);
     color: white;
     padding: 16px 32px;
     border-radius: var(--radius-lg);
@@ -872,22 +873,22 @@ textarea:focus {
 .user-marker {
     width: 18px;
     height: 18px;
-    background: var(--secondary-color);
+    background: var(--primary-color);
     border: 3px solid white;
     border-radius: 50%;
-    box-shadow: 0 0 0 3px var(--secondary-color), var(--shadow-md);
+    box-shadow: 0 0 0 3px var(--primary-color), var(--shadow-md);
     animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 3px var(--secondary-color), 0 0 0 6px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 6px rgba(22, 163, 74, 0.3);
     }
     50% {
-        box-shadow: 0 0 0 3px var(--secondary-color), 0 0 0 12px rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 12px rgba(22, 163, 74, 0);
     }
     100% {
-        box-shadow: 0 0 0 3px var(--secondary-color), 0 0 0 6px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 0 3px var(--primary-color), 0 0 0 6px rgba(22, 163, 74, 0.3);
     }
 }
 
