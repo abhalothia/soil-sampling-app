@@ -28,8 +28,7 @@
     <!-- Tab Navigation -->
     <nav class="tab-nav">
         <button class="tab-btn active" data-tab="map">Map</button>
-        <button class="tab-btn" data-tab="instructions">Instructions</button>
-        <button class="tab-btn" data-tab="checklist">Checklist</button>
+        <button class="tab-btn" data-tab="instructions">Guide</button>
         <button class="tab-btn" data-tab="data">Data</button>
     </nav>
 
@@ -79,16 +78,36 @@
         </div>
     </section>
 
-    <!-- Instructions Tab -->
+    <!-- Instructions/Guide Tab -->
     <section id="instructions-tab" class="tab-content">
         <div class="card">
-            <h2>Entry Point</h2>
-            <p><strong>H6 (Southeast corner)</strong></p>
-            <p>Start at the southeast corner of the plot and follow the marked route.</p>
+            <h2>How to Use This App</h2>
+            <ol class="instruction-list">
+                <li><strong>Map Tab:</strong> Shows all 9 sampling points. Tap a point to see details.</li>
+                <li><strong>Navigate:</strong> Opens Google Maps directions to the selected point.</li>
+                <li><strong>Take Sample:</strong> Shows step-by-step sampling checklist.</li>
+                <li><strong>Record Data:</strong> Opens form to record soil observations.</li>
+                <li><strong>Progress dots:</strong> Track completed points at bottom of map.</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Equipment Checklist</h2>
+            <ul class="checklist" id="equipment-checklist"></ul>
+        </div>
+
+        <div class="card">
+            <h2>Before You Start</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox"> Phone fully charged</label></li>
+                <li><label><input type="checkbox"> Weather check - avoid rain</label></li>
+                <li><label><input type="checkbox"> Informed someone of field visit</label></li>
+            </ul>
         </div>
 
         <div class="card">
             <h2>Sampling Route</h2>
+            <p>Entry: <strong>H6 (Southeast corner)</strong></p>
             <ol class="route-list">
                 <li>G5 <span class="arrow">&rarr;</span></li>
                 <li>E5 <span class="arrow">&rarr;</span></li>
@@ -110,35 +129,17 @@
                 <li>Take a vertical slice from the cut face</li>
                 <li>Collect approximately <strong>500g of soil</strong></li>
                 <li>Place in labeled bag</li>
-                <li>Record field observations</li>
+                <li>Record field observations in the app</li>
             </ol>
         </div>
 
         <div class="card">
-            <h2>Labeling</h2>
+            <h2>Bag Labeling</h2>
             <p>Write on each bag:</p>
             <ul class="label-format">
                 <li><strong>Sample Number:</strong> 1-9</li>
                 <li><strong>Grid Reference:</strong> e.g., G5</li>
                 <li><strong>Date:</strong> DD/MM/YYYY</li>
-            </ul>
-        </div>
-    </section>
-
-    <!-- Checklist Tab -->
-    <section id="checklist-tab" class="tab-content">
-        <div class="card">
-            <h2>Equipment Checklist</h2>
-            <ul class="checklist" id="equipment-checklist"></ul>
-        </div>
-
-        <div class="card">
-            <h2>Before You Start</h2>
-            <ul class="checklist">
-                <li><label><input type="checkbox"> Phone fully charged</label></li>
-                <li><label><input type="checkbox"> Downloaded offline map (optional)</label></li>
-                <li><label><input type="checkbox"> Weather check - avoid rain</label></li>
-                <li><label><input type="checkbox"> Informed someone of field visit</label></li>
             </ul>
         </div>
     </section>
