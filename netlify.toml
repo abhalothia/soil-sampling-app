@@ -1,0 +1,34 @@
+# Netlify configuration for Soil Sampling Field Guide App
+
+[build]
+  # No build command needed - static files only
+  publish = "."
+
+# Headers for security and caching
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Redirect all paths to index.html for SPA behavior (optional)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

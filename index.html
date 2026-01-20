@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Soil Sampling Field Guide</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="">
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2e7d32">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <h1>Fortune Farming</h1>
+        <p class="subtitle">Soil Sampling Field Guide</p>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="map">Map</button>
+        <button class="tab-btn" data-tab="instructions">Instructions</button>
+        <button class="tab-btn" data-tab="checklist">Checklist</button>
+        <button class="tab-btn" data-tab="data">Data</button>
+    </nav>
+
+    <!-- Map Tab -->
+    <section id="map-tab" class="tab-content active">
+        <div id="map"></div>
+
+        <!-- Point Info Panel -->
+        <div id="point-info" class="point-info hidden">
+            <div class="point-header">
+                <h3>Point <span id="point-number">1</span> (<span id="point-grid">G5</span>)</h3>
+                <button id="close-panel" class="close-btn">&times;</button>
+            </div>
+            <p class="coords">
+                <span id="point-lat">28.09958</span>, <span id="point-lon">77.78836</span>
+            </p>
+            <div id="proximity-info" class="proximity-info hidden">
+                <span id="distance-display">Distance: --</span>
+                <span id="proximity-warning" class="proximity-warning hidden">⚠️ Move closer to the sampling point</span>
+            </div>
+            <div class="point-actions">
+                <button id="navigate-btn" class="btn btn-primary">Navigate</button>
+                <button id="sample-btn" class="btn btn-warning"><span id="sample-btn-text">Take Sample</span></button>
+                <button id="record-btn" class="btn btn-success"><span id="record-btn-text">Record Data</span></button>
+            </div>
+
+            <!-- Sample Instructions Checklist -->
+            <div id="sample-instructions" class="sample-instructions hidden">
+                <h4>Sampling Steps</h4>
+                <ul class="sample-checklist">
+                    <li><label><input type="checkbox" data-step="1"> Clear surface debris (leaves, stones)</label></li>
+                    <li><label><input type="checkbox" data-step="2"> Dig a V-shaped cut to 15 cm depth</label></li>
+                    <li><label><input type="checkbox" data-step="3"> Take a vertical slice from the cut face</label></li>
+                    <li><label><input type="checkbox" data-step="4"> Collect approximately 500g of soil</label></li>
+                    <li><label><input type="checkbox" data-step="5"> Place in bag, label: <strong>Point <span class="sample-point-num">1</span></strong></label></li>
+                </ul>
+                <button id="sample-done-btn" class="btn btn-success sample-done-btn">Done</button>
+            </div>
+
+            <div id="point-status" class="point-status"></div>
+        </div>
+
+        <!-- Route Progress -->
+        <div class="route-progress">
+            <span class="progress-label">Progress:</span>
+            <div class="progress-dots" id="progress-dots"></div>
+        </div>
+    </section>
+
+    <!-- Instructions Tab -->
+    <section id="instructions-tab" class="tab-content">
+        <div class="card">
+            <h2>Entry Point</h2>
+            <p><strong>H6 (Southeast corner)</strong></p>
+            <p>Start at the southeast corner of the plot and follow the marked route.</p>
+        </div>
+
+        <div class="card">
+            <h2>Sampling Route</h2>
+            <ol class="route-list">
+                <li>G5 <span class="arrow">&rarr;</span></li>
+                <li>E5 <span class="arrow">&rarr;</span></li>
+                <li>B5 <span class="arrow">&rarr;</span></li>
+                <li>C4 <span class="arrow">&rarr;</span></li>
+                <li>E4 <span class="arrow">&rarr;</span></li>
+                <li>G4 <span class="arrow">&rarr;</span></li>
+                <li>D3 <span class="arrow">&rarr;</span></li>
+                <li>F2 <span class="arrow">&rarr;</span></li>
+                <li>G3 <span class="finish">(End)</span></li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>At Each Point</h2>
+            <ol class="instruction-list">
+                <li>Clear surface debris (leaves, stones)</li>
+                <li>Dig a V-shaped cut to <strong>15 cm depth</strong></li>
+                <li>Take a vertical slice from the cut face</li>
+                <li>Collect approximately <strong>500g of soil</strong></li>
+                <li>Place in labeled bag</li>
+                <li>Record field observations</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Labeling</h2>
+            <p>Write on each bag:</p>
+            <ul class="label-format">
+                <li><strong>Sample Number:</strong> 1-9</li>
+                <li><strong>Grid Reference:</strong> e.g., G5</li>
+                <li><strong>Date:</strong> DD/MM/YYYY</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Checklist Tab -->
+    <section id="checklist-tab" class="tab-content">
+        <div class="card">
+            <h2>Equipment Checklist</h2>
+            <ul class="checklist" id="equipment-checklist"></ul>
+        </div>
+
+        <div class="card">
+            <h2>Before You Start</h2>
+            <ul class="checklist">
+                <li><label><input type="checkbox"> Phone fully charged</label></li>
+                <li><label><input type="checkbox"> Downloaded offline map (optional)</label></li>
+                <li><label><input type="checkbox"> Weather check - avoid rain</label></li>
+                <li><label><input type="checkbox"> Informed someone of field visit</label></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Data Tab -->
+    <section id="data-tab" class="tab-content">
+        <div class="card">
+            <h2>Recorded Observations</h2>
+            <p class="sync-status" id="sync-status">
+                <span class="offline-badge">Offline Mode</span>
+                Data saved locally
+            </p>
+            <div id="observations-list" class="observations-list">
+                <p class="empty-state">No observations recorded yet.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Export Data</h2>
+            <button id="export-csv" class="btn btn-secondary">Export as CSV</button>
+            <button id="clear-data" class="btn btn-danger">Clear All Data</button>
+        </div>
+    </section>
+
+    <!-- Observation Modal -->
+    <div id="observation-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Record Observation</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+
+            <form id="observation-form">
+                <input type="hidden" id="form-point-number">
+                <input type="hidden" id="form-grid-ref">
+                <input type="hidden" id="form-lat">
+                <input type="hidden" id="form-lon">
+
+                <div class="form-group">
+                    <label>Point</label>
+                    <p class="form-static"><span id="form-point-display">1 (G5)</span></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="white-deposits">White Deposits (Salt Crust)</label>
+                    <div class="radio-group" id="white-deposits">
+                        <label class="radio-label"><input type="radio" name="whiteDeposits" value="Yes"> Yes</label>
+                        <label class="radio-label"><input type="radio" name="whiteDeposits" value="Slight"> Slight</label>
+                        <label class="radio-label"><input type="radio" name="whiteDeposits" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="soil-color">Soil Color</label>
+                    <div class="radio-group" id="soil-color">
+                        <label class="radio-label"><input type="radio" name="soilColor" value="Dark"> Dark</label>
+                        <label class="radio-label"><input type="radio" name="soilColor" value="Medium"> Medium</label>
+                        <label class="radio-label"><input type="radio" name="soilColor" value="Pale"> Pale</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="waterlogging">Waterlogging Signs</label>
+                    <div class="radio-group" id="waterlogging">
+                        <label class="radio-label"><input type="radio" name="waterlogging" value="Yes"> Yes</label>
+                        <label class="radio-label"><input type="radio" name="waterlogging" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="compaction">Soil Compaction</label>
+                    <div class="radio-group" id="compaction">
+                        <label class="radio-label"><input type="radio" name="compaction" value="Yes"> Yes</label>
+                        <label class="radio-label"><input type="radio" name="compaction" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vegetation">Vegetation Status</label>
+                    <div class="radio-group" id="vegetation">
+                        <label class="radio-label"><input type="radio" name="vegetation" value="Healthy"> Healthy</label>
+                        <label class="radio-label"><input type="radio" name="vegetation" value="Stunted"> Stunted</label>
+                        <label class="radio-label"><input type="radio" name="vegetation" value="Patchy"> Patchy</label>
+                        <label class="radio-label"><input type="radio" name="vegetation" value="Absent"> Absent</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Any additional observations..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-form">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Observation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
